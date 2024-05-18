@@ -33,7 +33,7 @@ nav:
   - 'Prerequisites': 'prerequisites.md'
   - 'Project Overview': 'proejct-overview.md'
   - 'llm-deployment':
-      - 'Chat Models': llm-deployments/chat_model/readme.md
+      - 'Chat Models': llm-deployments/chat_model/deployment.md
 
 
 
