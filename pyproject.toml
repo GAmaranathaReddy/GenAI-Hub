@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "GenAI-Deployment"
+version = "0.1.0"
+description = ""
+authors = ["Amaranatha Reddy <amaranathadev@gmail.com>"]
+readme = "README.md"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+mkdocs-git-revision-date-localized-plugin = "^1.2.4"
+mkdocs-git-revision-date-plugin = "^0.3.2"
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "default"
+
+[tool.poetry.group.github-pages.dependencies]
+mkdocs-material = "^9.5.4"
+mkdocs-git-revision-date-localized-plugin = "^1.2.2"
+mkdocs-git-authors-plugin = "^0.7.2"
