@@ -1,0 +1,59 @@
+site_name: GenAI Deployment guide
+theme:
+  name: material
+  features:
+    - navigation.expand
+    - content.code.copy
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    admonition:
+      info: fontawesome/solid/circle-info
+    repo: fontawesome/brands/github
+  custom_dir: doc_themes
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - 'Home': index.md
+  - 'Prerequisites': 'prerequisites.md'
+  - 'Project Overview': 'proejct-overview.md'
+  - 'llm-deployment':
+      - 'Chat Models': llm-deployments/chat_model/readme.md
+
+
+
+repo_url: https://github.com/GAmaranathaReddy/GenAI-deployments
+repo_name: G AmaranathaReddy/GenAI-deployments
+edit_uri: /edit/main/docs/
+
+site_url: !!python/object/apply:os.getenv ['GITHUB_PAGES_URL', '']
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: custom
+      timezone: UTC
+      custom_format: '%Y-%m-%d %H:%M:%S %Z'
+      fallback_to_build_date: true
+  - git-authors
+  - tags:
+      tags_file: tags.md
+
+watch:
+  - 'doc_themes'
