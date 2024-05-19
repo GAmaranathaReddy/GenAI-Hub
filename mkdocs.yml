@@ -1,4 +1,4 @@
-site_name: GenAI Deployment guide
+site_name: GenAI Hub guide
 theme:
   name: material
   features:
@@ -39,8 +39,8 @@ nav:
 
 
 
-repo_url: https://github.com/GAmaranathaReddy/GenAI-deployments
-repo_name: G AmaranathaReddy/GenAI-deployments
+repo_url: https://github.com/GAmaranathaReddy/GenAI-Hub
+repo_name: G AmaranathaReddy/GenAI-Hub
 edit_uri: /edit/main/docs/
 
 site_url: !!python/object/apply:os.getenv ['GITHUB_PAGES_URL', '']
