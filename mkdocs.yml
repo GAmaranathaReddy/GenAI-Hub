@@ -34,6 +34,8 @@ nav:
   - 'Project Overview': 'proejct-overview.md'
   - 'llm-deployment':
       - 'Chat Models': llm-deployments/chat-models/deployment.md
+      - 'Finetuned Models': llm-deployments/finetuned-models/deployment.md
+      - 'Embeded Models': llm-deployments/embed-models/deployment.md
 
 
 
