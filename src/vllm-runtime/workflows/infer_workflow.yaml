@@ -1,0 +1,121 @@
+apiVersion: ai.sap.com/v1alpha1
+kind: ServingTemplate
+metadata:
+  name: your-vllm-huggingface
+  annotations:
+    scenarios.ai.sap.com/description: "Huggingface Model deployment on SAP AI Core"
+    scenarios.ai.sap.com/name: "your-vllm-huggingface"
+    executables.ai.sap.com/description: "Inference executable for Huggingface LLM"
+    executables.ai.sap.com/name: "your-llm-exec"
+  labels:
+    scenarios.ai.sap.com/id: "your-vllm-huggingface"
+    executables.ai.sap.com/id: "your-vllm-huggingface"
+    ai.sap.com/version: "1.0.0"
+spec:
+  inputs:
+    parameters:
+    - name: image
+      type: "string"
+      default: "your image"
+    - name: resourcePlan
+      type: "string"
+      default: "infer2.4xl"
+    - name: minReplicas
+      type: "string"
+      default: "1"
+    - name: maxReplicas
+      type: "string"
+      default: "1"
+    - name: portNumber
+      type: "string"
+      default: "9000"
+    - name: modelId
+      type: "string"
+      default: "codellama/CodeLlama-34b-Instruct-hf"
+    - name: gpu
+      type: "string"
+      default: "4"
+    - name: trustRemoteCode
+      type: "string"
+      default: "true"
+    - name: disableKernel
+      type: "string"
+      default: "False"
+    - name: huggingFaceOffline
+      type: "string"
+      default: "1"
+    - name: disableTelemetry
+      type: "string"
+      default: "1"
+    - name: revision
+      type: "string"
+      default: "1"
+    - name: additionalArgument
+      type: "string"
+      default: ""
+    - name: modelName
+      type: "string"
+      default: ""
+    artifacts:
+    - name: textmodel
+  template:
+    apiVersion: "serving.kserve.io/v1beta1"
+    metadata:
+      annotations: |
+        autoscaling.knative.dev/metric: concurrency
+        autoscaling.knative.dev/target: 1
+        autoscaling.knative.dev/targetBurstCapacity: -1
+        autoscaling.knative.dev/window: "10m"
+        autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "10m"
+      labels: |
+        ai.sap.com/resourcePlan: "{{inputs.parameters.resourcePlan}}"
+    spec: |
+      predictor:
+        imagePullSecrets:
+        - name: your-docker-registry-secret
+        - name: sap-docker-registry-secret
+        minReplicas: {{inputs.parameters.minReplicas}}
+        maxReplicas: {{inputs.parameters.maxReplicas}}
+        containers:
+        - name: kserve-container
+          image: "{{inputs.parameters.image}}"
+          ports:
+          - containerPort: {{inputs.parameters.portNumber}}
+            protocol: TCP
+          env:
+          - name: STORAGE_URI
+            value: "{{inputs.artifacts.textmodel}}"
+          - name: MODEL_ID
+            value: "{{inputs.parameters.modelId}}"
+          - name: NUM_SHARD
+            value: "{{inputs.parameters.gpu}}"
+          - name: DISABLE_CUSTOM_KERNELS
+            value: "{{inputs.parameters.disableKernel}}"
+          - name: TRUST_REMOTE_CODE
+            value: "{{inputs.parameters.trustRemoteCode}}"
+          - name: HF_HUB_OFFLINE
+            value: "{{inputs.parameters.huggingFaceOffline}}"
+          - name: HF_HUB_DISABLE_TELEMETRY
+            value: "{{inputs.parameters.disableTelemetry}}"
+          - name: REVISION
+            value: "{{inputs.parameters.revision}}"
+          - name: ARG
+            value: "{{inputs.parameters.additionalArgument}}"
+          - name: MODEL_SERVE_NAME
+            value: "{{inputs.parameters.modelName}}"
+          - name: HUGGINGFACE_HUB_CACHE
+            value: "/mnt/models"
+          - name: HUGGING_FACE_HUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: your-huggingface-secret
+                key: credential
+          volumeMounts:
+          - name: shm
+            mountPath: /dev/shm
+        volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 10Gi
+
