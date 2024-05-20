@@ -111,4 +111,6 @@ docker push <dockerRepository>/aicore-vllm:v<ddmmyy>-<minorVersion>
 ## AICore deployment
 [AICore deployment](../chat-models/deployment.md#vllm-deployment-on-sap-ai-core)
 
+## Source Code
+Compelte source code [Source Code](https://github.com/GAmaranathaReddy/GenAI-Hub/tree/main/src/vllm-runtime) {:target="\_blank"}.
 
