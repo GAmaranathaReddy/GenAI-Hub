@@ -333,3 +333,6 @@ emb = openai.embeddings.create(model='nomic-ai/nomic-embed-text-v1.5', input=que
 
 This post is designed to give you a head start on setting up your own embedding models on AI Core. When deploying models, there are many technical details that play a role and must be taken into account. Expect that the best way to deploy an embedding will change on a regular basis. Also, don't forget about the costs. You'll need to keep those models under high utilization if you want to keep your spending anywhere near what the big commercial companies charge.
 
+## Source code
+
+Complete source code example [Source Code](https://github.com/GAmaranathaReddy/GenAI-Hub/tree/main/src/emb-runtime) {:target="\_blank"}.
