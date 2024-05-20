@@ -1,0 +1,88 @@
+apiVersion: ai.sap.com/v1alpha1
+kind: ServingTemplate
+metadata:
+  name: infinity-emb-model-serve
+  annotations:
+    scenarios.ai.sap.com/description: "Awesome fine tuned LLMs"
+    scenarios.ai.sap.com/name: "llm-fine-tuning"
+    executables.ai.sap.com/description: "Embedding Model Serving executable based on infinity"
+    executables.ai.sap.com/name: "infinity-emb-model-serve"
+  labels:
+    scenarios.ai.sap.com/id: "llm-fine-tuning"
+    ai.sap.com/version: "1.0.0"
+spec:
+  inputs:
+    parameters:
+    - name: image
+      type: "string"
+      default: "ImageURL"
+    - name: modelName
+      type: "string"
+    - name: tokenizer
+      type: "string"
+      default: ""
+    - name: resourcePlan
+      type: "string"
+      default: "infer2.l"
+    - name: minReplicas
+      type: "string"
+      default: "1"
+    - name: maxReplicas
+      type: "string"
+      default: "1"
+    - name: portNumber
+      type: "string"
+      default: "9000"
+    - name: trustRemoteCode
+      type: "string"
+      default: "true"
+    - name: batchSize
+      type: "string"
+      default: "128"
+    - name: additionalArgument
+      type: "string"
+      default: ""
+    artifacts:
+    - name: embmodel
+  template:
+    apiVersion: "serving.kserve.io/v1beta1"
+    metadata:
+      annotations: |
+        autoscaling.knative.dev/metric: concurrency
+        autoscaling.knative.dev/target: 1
+        autoscaling.knative.dev/targetBurstCapacity: -1
+        autoscaling.knative.dev/window: "10m"
+        autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: "10m"
+      labels: |
+        ai.sap.com/resourcePlan: "{{inputs.parameters.resourcePlan}}"
+    spec: |
+      predictor:
+        imagePullSecrets:
+        - name: gcr-secret
+        minReplicas: {{inputs.parameters.minReplicas}}
+        maxReplicas: {{inputs.parameters.maxReplicas}}
+        containers:
+        - name: kserve-container
+          image: "{{inputs.parameters.image}}"
+          ports:
+          - containerPort: {{inputs.parameters.portNumber}}
+            protocol: TCP
+          env:
+          - name: STORAGE_URI
+            value: "{{inputs.artifacts.embmodel}}"
+          - name: TRUST_REMOTE_CODE
+            value: "{{inputs.parameters.trustRemoteCode}}"
+          - name: BATCH_SIZE
+            value: "{{inputs.parameters.batchSize}}"
+          - name: ARG
+            value: "{{inputs.parameters.additionalArgument}}"
+          - name: HUGGINGFACE_HUB_CACHE
+            value: "/tmp"
+          volumeMounts:
+          - name: shm
+            mountPath: /dev/shm
+        volumes:
+        - name: shm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 10Gi
