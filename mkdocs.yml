@@ -31,7 +31,6 @@ markdown_extensions:
 nav:
   - 'Home': index.md
   - 'Prerequisites': 'prerequisites.md'
-  - 'Project Overview': 'proejct-overview.md'
   - 'llm-deployment':
       - 'Chat Models': llm-deployments/chat-models/deployment.md
       - 'Finetuned Models': llm-deployments/fine-tunemodels/deployment.md
