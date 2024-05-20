@@ -25,7 +25,7 @@ The deployment of LLMs can be quite challenging as it requires a lot of dependen
 #### 2. High throughput of inference requests
 
 vLLM outperforms the Huggingface (HF) deployment frameworks it achieves up to 24x higher throughput compared to HF and up to 3.5x higher throughput than TGI.
-![vllm-benchmark](../../images/vllm-benchmark.png)
+![vllm-benchmark](../../../images/vllm-benchmark.png)
 
 #### 3. Seamless Integration:
 One of vLLM's strengths is its compatibility with various HuggingFace models, including architectures like GPT-2, GPT-NeoX, Falcon, and more.
