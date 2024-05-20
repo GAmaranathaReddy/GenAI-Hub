@@ -11,7 +11,7 @@
 The key idea for the fine-tuned model weights packaging is that: 1) it must be HuggingFace Hub format with specific required files.
 ```
 For our exploration in hosting the fine-tuned models, we downloaded model weights that were fine-tuned via ADB but utilised models that are downloaded from HuggingFace. For example, we can take a look at the following model artifacts available post fine-tuning:
-![finetuned model weights](../../images/mistral-weights.png) ![mistral huggingface weights](../../images/mistral-huggingface-weights.png)
+![finetuned model weights](../../../images/mistral-weights.png) ![mistral huggingface weights](../../../images/mistral-huggingface-weights.png)
 
 On the left, we have the model artifacts setup from ADB post fine-tuning, while on the right, we have the original model weight setup hosted on HuggingFace Hub. As you can see, the following files should always be present to ensure that inference via vLLM can work as expected:
 
