@@ -35,6 +35,8 @@ nav:
       - 'Chat Models': llm-deployments/chat-models/deployment.md
       - 'Finetuned Models': llm-deployments/fine-tunemodels/deployment.md
       - 'Embeded Models': llm-deployments/embed-models/deployment.md
+  - 'proxy-deployment':
+      - 'LiteLLM': proxy-deployments/deployment.md
 
 
 
