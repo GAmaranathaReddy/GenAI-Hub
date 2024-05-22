@@ -1,0 +1,1662 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../prerequisites/">
+      
+      
+        <link rel="next" href="../../fine-tunemodels/deployment/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
+    
+    
+      
+        <title>Chat Models - GenAI Hub Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm-40-176h24v-64h-24c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chat-hosted-models-vllm-framework" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="GenAI Hub Guide" class="md-header__button md-logo" aria-label="GenAI Hub Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GenAI Hub Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chat Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/GAmaranathaReddy/GenAI-Hub" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    G AmaranathaReddy/GenAI-Hub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="GenAI Hub Guide" class="md-nav__button md-logo" aria-label="GenAI Hub Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    GenAI Hub Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/GAmaranathaReddy/GenAI-Hub" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    G AmaranathaReddy/GenAI-Hub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../prerequisites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequisites
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    llm-deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            llm-deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Chat Models
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Chat Models
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#self-hosted-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self hosted models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-vllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the vLLM ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-need-vlmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why do we need vLMM?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why do we need vLMM?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-llm-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. LLM Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-high-throughput-of-inference-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. High throughput of inference requests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-seamless-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Seamless Integration:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-get-started-with-vllm-and-local-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to get started with vLLM and Local Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to get started with vLLM and Local Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-install-with-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1. Install with pip:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-build-from-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2. Build from source:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 2. Build from source:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quickstart:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-of-supported-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of supported models:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-new-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding a new model:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-1-offline-batch-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Offline Batch Inference:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-api-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: API Server:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the server:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-openai-compatible-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: OpenAI-Compatible Server:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Deployment:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Deployment:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploying-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying with Docker:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vllm-deployment-on-sap-ai-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      vLLM deployment on SAP AI Core
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vLLM deployment on SAP AI Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-requisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-resources-need-for-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Resources Need for Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-vllm-inference-server-docker-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building vLLM Inference Server Docker Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloading-huggingface-model-artefacts-and-saving-to-s3-object-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Downloading HuggingFace Model Artefacts and saving to S3 Object Store
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Downloading HuggingFace Model Artefacts and saving to S3 Object Store">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-using-hf-downloader-and-aws-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Using HF downloader and AWS CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-llm-servingtemplate-for-ai-core-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating LLM ServingTemplate for AI Core Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-settings-on-ai-launchpad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment settings on AI Launchpad
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment settings on AI Launchpad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-creating-application-to-sync-servingtemplate-sap-ai-core-administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Creating Application to Sync ServingTemplate (SAP AI Core Administration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-creating-object-store-secret-on-ai-launchpad-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Creating Object Store Secret on AI Launchpad (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-creating-models-on-ai-launchpad-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Creating Models on AI Launchpad (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-creating-configurations-for-deployment-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Creating Configurations for Deployment (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-creating-deployment-for-llm-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Creating Deployment for LLM (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-the-pros-cons-vlmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are the pros &amp; cons vLMM?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fine-tunemodels/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Finetuned Models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../embed-models/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Embeded Models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    proxy-deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            proxy-deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proxy-deployments/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LiteLLM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#self-hosted-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self hosted models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-vllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is the vLLM ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-do-we-need-vlmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why do we need vLMM?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why do we need vLMM?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-llm-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. LLM Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-high-throughput-of-inference-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. High throughput of inference requests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-seamless-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Seamless Integration:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-get-started-with-vllm-and-local-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to get started with vLLM and Local Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How to get started with vLLM and Local Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-install-with-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1. Install with pip:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-build-from-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2. Build from source:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option 2. Build from source:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quickstart:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list-of-supported-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of supported models:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-a-new-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding a new model:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-1-offline-batch-inference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Offline Batch Inference:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-api-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: API Server:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start the server:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-openai-compatible-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: OpenAI-Compatible Server:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Deployment:
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Deployment:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploying-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying with Docker:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vllm-deployment-on-sap-ai-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      vLLM deployment on SAP AI Core
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="vLLM deployment on SAP AI Core">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pre-requisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-resources-need-for-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Resources Need for Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-vllm-inference-server-docker-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building vLLM Inference Server Docker Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#downloading-huggingface-model-artefacts-and-saving-to-s3-object-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Downloading HuggingFace Model Artefacts and saving to S3 Object Store
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Downloading HuggingFace Model Artefacts and saving to S3 Object Store">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-using-hf-downloader-and-aws-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Using HF downloader and AWS CLI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-llm-servingtemplate-for-ai-core-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Creating LLM ServingTemplate for AI Core Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deployment-settings-on-ai-launchpad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment settings on AI Launchpad
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deployment settings on AI Launchpad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3-creating-application-to-sync-servingtemplate-sap-ai-core-administration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Creating Application to Sync ServingTemplate (SAP AI Core Administration)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-creating-object-store-secret-on-ai-launchpad-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Creating Object Store Secret on AI Launchpad (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-creating-models-on-ai-launchpad-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Creating Models on AI Launchpad (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-creating-configurations-for-deployment-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Creating Configurations for Deployment (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-creating-deployment-for-llm-ml-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Creating Deployment for LLM (ML Operations)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-the-pros-cons-vlmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are the pros &amp; cons vLMM?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="chat-hosted-models-vllm-framework">Chat hosted models: vLLM framework</h1>
+<h2 id="self-hosted-models">Self hosted models</h2>
+<p>Self-model hosting involves deploying the LLM model within an organization's private infrastructure. This setup ensures that the model and data stay on-premises or within a secure network, which can be crucial for applications with strict data privacy or security requirements.</p>
+<h2 id="what-is-the-vllm">What is the vLLM ?</h2>
+<p>vLLM is a library designed to easily serve LLMs for inference with a high throughput. It is meant to take care of the highly complex deployment of models and ensuring an effective use of GPU memory, thus lowering the deployment time and the hardware requirements.</p>
+<p>Some useful resources as a starting point are: </br>
+<a href="https://vllm.ai/">vLLM website</a> </br>
+<a href="https://github.com/vllm-project">vLLM Github repo</a> </br>
+<a href="https://www.youtube.com/watch?v=5ZlavKF_98U">Conference talk about vLLM</a></p>
+<h2 id="why-do-we-need-vlmm">Why do we need vLMM?</h2>
+<p>Serving LLMs can be as sluggish even with pricey hardware. vLLM is the ultimate open-source toolkit for lightning-fast LLM inference and serving. It packs a secret weapon called PagedAttention, a brainy algorithm that handles LLM’s attention keys and values like a champ. LLM-serving tool delivers up to 24x more speed than HuggingFace (HF) Transformers and and a whopping 3.5x more speed than HuggingFace Text Generation Inference (TGI).</p>
+<p>vLLM offers several key features that sets it apart:</p>
+<h4 id="1-llm-deployment">1. LLM Deployment</h4>
+<p>The deployment of LLMs can be quite challenging as it requires a lot of dependencies and technologies like CUDA, docker, various python libraries and some kind of API framework. There are tools like Huggingface's Text-Generation-Inference (TGI) , Nvidia Triton inference server, and FastAPI to make the deployment easier, but they might lead to throughput issues.</p>
+<h4 id="2-high-throughput-of-inference-requests">2. High throughput of inference requests</h4>
+<p>vLLM outperforms the Huggingface (HF) deployment frameworks it achieves up to 24x higher throughput compared to HF and up to 3.5x higher throughput than TGI.
+<img alt="vllm-benchmark" src="../../../images/vllm-benchmark.png" /></p>
+<h4 id="3-seamless-integration">3. Seamless Integration:</h4>
+<p>One of vLLM's strengths is its compatibility with various HuggingFace models, including architectures like GPT-2, GPT-NeoX, Falcon, and more.</p>
+<h2 id="how-to-get-started-with-vllm-and-local-deployment">How to get started with vLLM and Local Deployment</h2>
+<h3 id="installation">Installation:</h3>
+<p><a href="https://vllm.readthedocs.io/en/latest/getting_started/installation.html">Installation Guide</a></p>
+<p>Requirements: OS: Linux; Python: 3.8 – 3.11; GPU: compute capability 7.0 or higher (e.g., V100, T4, RTX20xx, A100, L4, etc.)</p>
+<h4 id="option-1-install-with-pip">Option 1. Install with pip: </br></h4>
+<div class="highlight"><pre><span></span><code># (Optional) Create a new conda environment.
+conda create -n myenv python=3.8 -y
+conda activate myenv
+
+# Install vLLM.
+pip install vllm
+</code></pre></div>
+<h4 id="option-2-build-from-source">Option 2. Build from source:</h4>
+<p>You can also build and install vLLM from source:
+<div class="highlight"><pre><span></span><code>git clone https://github.com/vllm-project/vllm.git
+cd vllm
+pip install -e .  # This may take 5-10 minutes.
+</code></pre></div></p>
+<h5 id="quickstart">Quickstart:</h5>
+<p><a href="https://vllm.readthedocs.io/en/latest/getting_started/quickstart.html">Quickstart</a></p>
+<p>Before we start with the topic of Quickstart, it is worth noting the supported models and the option of adding a new model.</br></p>
+<h5 id="list-of-supported-models">List of supported models:</h5>
+<p>https://vllm.readthedocs.io/en/latest/models/supported_models.html#supported-models</p>
+<h5 id="adding-a-new-model">Adding a new model:</h5>
+<p>https://vllm.readthedocs.io/en/latest/models/adding_model.html#adding-a-new-model</p>
+<h5 id="option-1-offline-batch-inference">Option 1: Offline Batch Inference:</h5>
+<p>Here we have an example to use vLLM as offline batched inference on a dataset. We use the OPT-125M model.</p>
+<p>Example offline Batch Inference:
+https://github.com/vllm-project/vllm/blob/main/examples/offline_inference.py</p>
+<h5 id="option-2-api-server">Option 2: API Server:</h5>
+<p>build an API server for a large language model;
+Simple Example:</p>
+<h5 id="start-the-server">Start the server:</h5>
+<p>python -m vllm.entrypoints.api_server</p>
+<p>Query the model in shell:</p>
+<div class="highlight"><pre><span></span><code>curl http://localhost:8000/generate \
+
+    -d &#39;{
+        &quot;prompt&quot;: &quot;San Francisco is a&quot;,
+        &quot;use_beam_search&quot;: true,
+        &quot;n&quot;: 4,
+        &quot;temperature&quot;: 0
+    }&#39;
+</code></pre></div>
+<p>For a more detailed client example: https://github.com/vllm-project/vllm/blob/main/examples/api_client.py</p>
+<h4 id="option-3-openai-compatible-server">Option 3: OpenAI-Compatible Server:</h4>
+<p>vLLM can be deployed as a server that mimics the OpenAI API protocol. This allows vLLM to be used as a drop-in replacement for applications using OpenAI API</p>
+<p>Example: https://github.com/vllm-project/vllm/blob/main/examples/openai_completion_client.py</p>
+<h3 id="local-deployment">Local Deployment:</h3>
+<pre><code>There are four options for Deployment. For us to deploy vLLM on AI Core the best option is to deploy it as a Docker
+</code></pre>
+<h5 id="deploying-with-docker">Deploying with Docker:</h5>
+<p>https://vllm.readthedocs.io/en/latest/serving/deploying_with_docker.html
+You can build and run vLLM from source via the provided dockerfile. To build vLLM:</p>
+<div class="highlight"><pre><span></span><code>DOCKER_BUILDKIT=1 docker build . --target vllm --tag vllm --build-arg max_jobs=8
+
+docker run --runtime nvidia --gpus all \
+    -v ~/.cache/huggingface:/root/.cache/huggingface \
+    -p 8000:8000 \
+    --env &quot;HUGGING_FACE_HUB_TOKEN=&lt;secret&gt;&quot; \
+    vllm &lt;args...&gt;
+</code></pre></div>
+<h2 id="vllm-deployment-on-sap-ai-core">vLLM deployment on SAP AI Core</h2>
+<ol>
+<li>Creating Models on AI Launchpad (ML Operations)</li>
+</ol>
+<p>Approach: To deploy the vLLM on AI Core, there are two different approaches. The diagram below clearly shows both these approaches:
+<img alt="vLLM Approach" src="../../../images/vLLM%20Approach.png" /></p>
+<h3 id="pre-requisites">Pre-requisites</h3>
+<p>This guide assumes:</p>
+<p>1) Familiarity with SAP AI Core. See <a href="https://learning.sap.com/learning-journey/learning-how-to-use-the-sap-ai-core-service-on-sap-business-technology-platform">SAP AI Core on BTP</a>. </br>
+2) Understanding the SAP AI Core deployment workflow. See <a href="https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/use-your-model?locale=en-US">SAP AI Core ML Operations Documentation</a>.</br>
+3) Access to JFrog Artifactory. See <a href="https://pages.github.tools.sap/Common-Repository/Artifactory-Internet-Facing-Dev/commonrepo-onboard/#api">Gain Access to SAP Internet Facing Common Repository</a>.</br>
+    3.1) For write access to push Docker images,please contact the admin person</br>
+or
+3) Please use <a href="https://hub.docker.com/">docker hub</a> for push image.</br>
+4) Possession of an active Hugging Face account.</br>
+5) Access to the model hosted on HF.</br>
+6) Access to the ADB Pipeline .</br></p>
+<h3 id="understanding-resources-need-for-deployment">Understanding Resources Need for Deployment</h3>
+<p>Before deploying a LLM on AI Core using vLLM, you will first need to understand the resource plans currently available, as well as the resources required for the model.</p>
+<p>The available resource plans on AI Core for IES deployment workflow (tenants with sap-internal service-plan) are the following:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">ResourcePlan ID</th>
+<th style="text-align: center;">GPUs</th>
+<th style="text-align: center;">GPU Memory</th>
+<th style="text-align: center;">Label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">infer2.l</td>
+<td style="text-align: center;">1 A10G</td>
+<td style="text-align: center;">1 x 24 GB =   24 GB</td>
+<td style="text-align: center;">ai.sap.com/resourcePlan: infer2.l</td>
+</tr>
+<tr>
+<td style="text-align: center;">infer2.4xl</td>
+<td style="text-align: center;">4 A10G</td>
+<td style="text-align: center;">4 x 24 GB =   96 GB</td>
+<td style="text-align: center;">ai.sap.com/resourcePlan: infer2.4xl</td>
+</tr>
+<tr>
+<td style="text-align: center;">train2.8xl</td>
+<td style="text-align: center;">8 A100</td>
+<td style="text-align: center;">8 x 40 GB = 320 GB</td>
+<td style="text-align: center;">ai.sap.com/resourcePlan: train2.8xl</td>
+</tr>
+<tr>
+<td style="text-align: center;">train2.8xxl</td>
+<td style="text-align: center;">8 A100</td>
+<td style="text-align: center;">8 x 40 GB = 320 GB</td>
+<td style="text-align: center;">ai.sap.com/resourcePlan: train2.8xxl</td>
+</tr>
+</tbody>
+</table>
+<p>For LLM serving the most important resource KPI is the GPU memory, which depends on how much space the model parameters consume. The model parameters give a rough estimate on how much GPU memory is required. Depending on the precision used i.e. how many digit does each model weight (parameter) have. Think of it in terms of position after decimal point. It is usually 4, 8, 16, 32 bit, which are 0.5, 1, 2, 4 byte. 1 billion bytes are 1GB. As an example Llama-2-70b-chat full precision is 16bit therefore therefore inference requires at least 140 GB of GPU RAM just to load the model into the memory. At FP32, you would need double of that (about ~260Gb to load the model). Furthermore iit is important to understand, that depending on how the LLM is deployed it might only use one GPU and therefore leading to an out of memory error, despite having theoretically enough, when all GPU memory is added up. This very much depends on what is used for inference e.g. vLLM or PyTorch directly, etc. and if the docker container is configured correctly e.g. all the dependencies and PATHS are correctly installed. Also the hardware might not be ready for distributive inference as some GPUs do not support multi-GPU memory distribution. If you want to more about hardware requirements this blog article is a good start: https://www.baseten.co/blog/llm-transformer-inference-guide/ and this Databricks article goes a little more into depth https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices</p>
+<h3 id="building-vllm-inference-server-docker-image">Building vLLM Inference Server Docker Image</h3>
+<p>As the vLLM Inference Server Docker image is fundamentally a Docker image that only contains the vLLM setup, individual developers would NOT be required to build a new vLLM image every time a new deployment is conducted. As such, a standardised repository path is created to host the [latest] image that can be re-used across different deployments.</p>
+<p><div class="highlight"><pre><span></span><code># From dir where you want to clone the repository:
+git clone &lt;https://github.tools.sap/Artificial-Intelligence-CoE/AICore-vLLM.git&gt;
+
+# From the AICore-LLM directory
+cd inference-server
+
+# Build docker image
+docker build -t &lt;dockerRepository&gt;/aicore-vllm:v&lt;ddmmyy&gt;-&lt;minorVersion&gt; .
+# e.g.,
+# docker build -t ies-aicoe.common.repositories.cloud.sap/genai-platform-exp/aicore-vllm:v090124-01 .
+
+# Push docker image to the registered repository
+docker push &lt;dockerRepository&gt;/aicore-vllm:v&lt;ddmmyy&gt;-&lt;minorVersion&gt;
+# e.g.,
+# docker push ies-aicoe.common.repositories.cloud.sap/genai-platform-exp/aicore-vllm:v090124-01
+</code></pre></div>
+For standardisation purposes, the following naming convention denoted above must be adhered: </br></p>
+<p>1) Our container image repository is located at: ies-aicoe.common.repositories.cloud.sap/genai-platform-exp&gt; </br>
+2) vLLM images are to named as: aicore-vllm </br>
+3) Version tag format are to be named as: v<ddmmyy>-<minorVersion>, where the minorVersion starts from 01.</br></p>
+<p>An example of the full naming structure would be:</p>
+<div class="highlight"><pre><span></span><code>ies-aicoe.common.repositories.cloud.sap/genai-platform-exp/aicore-vllm:v090124-01
+</code></pre></div>
+<h3 id="downloading-huggingface-model-artefacts-and-saving-to-s3-object-store">Downloading HuggingFace Model Artefacts and saving to S3 Object Store</h3>
+<h4 id="1-using-hf-downloader-and-aws-cli">1. Using HF downloader and AWS CLI</h4>
+<p>1.Download the model using HF downloader.
+<div class="highlight"><pre><span></span><code>NOTE: This section is currently demonstrating the local download process of model artefacts.
+Ideally, we will be implementing a pipeline to handle both download and transferring of model artefacts in the subsequent sprints.
+</code></pre></div>
+To download the model and its corresponding artefacts, please use the following repository. The HuggingFace model downloader provides the following functionalities:</p>
+<p>1) Support for concurrent files download </br>
+2) Resumable download </br>
+3) Filter files download based on patterns and serialization format (e.g., .bin, .pt, .safetensors) </br>
+4) Package model in tarball format for further usage (e.g., vLLM) </br></p>
+<p>For example to download tiiuae/falcon-7b-instruct you would use this command:
+<div class="highlight"><pre><span></span><code>poetry run python3 src/hf_downloader.py --model-name &quot;tiiuae/falcon-7b-instruct&quot; \
+                                        --revision &quot;cf4b3c42ce2fdfe24f753f0f0d179202fea59c99&quot; \
+                                        --max-workers 8 \
+                                        --save-as-tarfile \
+                                        --tarfile-name &quot;tiiuae--falcon-7b-instruct&quot;
+</code></pre></div>
+For full options regarding the HuggingFace downloader CLI, refer to this <a href="">repository</a>.</p>
+<p>The model artefacts will be saved as a tarfile format that will be later transffered to our S3 bucket and be used in the inference process.</p>
+<p>The content of the tarball file should follow this directory structure:</p>
+<div class="highlight"><pre><span></span><code>tiiuae--falcon-7b-instruct
+├── models--tiiuae--falcon-7b-instruct
+│   ├── blobs
+│   │   ├── 02b145e38790e52c2161b8d5ed97ee967bc3307e
+│   │   ├── 1d92decce70fb4d5e840694c6947d2abfef27fdf
+│   │   ├── 1de823c84b1c8b9889ac2a6c670ec6002a71776abd42cdf51bb3acd4c9938b29
+│   │   ├── 24f2d2e20d26ae4f0729da0d008e0ee6d81fc560
+│   │   ├── 24f43d813328da380b3d684c019f9c6d84df6b50
+│   │   ├── 4aa644a0eca5b539ec8703d62d4b957c74a54963
+│   │   ├── 66acf4bebb68593952a51575cb02dbf258a606e236c6b82b6b60c3b1e9089e66
+│   │   ├── 70c059b13f10f3e20d34a31174dd7da53cfb93ad
+│   │   ├── 834822cbe81585262b727c3fdbe520a34fd24ad4
+│   │   ├── 84d8843072cbc300692c6bccff5b9c08c430498e
+│   │   └── def8c2bf7e0f85be115be9e6a79dd3c5aa50a99d
+│   ├── refs
+│   │   └── main
+│   └── snapshots
+│       └── cf4b3c42ce2fdfe24f753f0f0d179202fea59c99
+│           ├── config.json -&gt; ../../blobs/84d8843072cbc300692c6bccff5b9c08c430498e
+│           ├── configuration_falcon.py -&gt; ../../blobs/def8c2bf7e0f85be115be9e6a79dd3c5aa50a99d
+│           ├── generation_config.json -&gt; ../../blobs/02b145e38790e52c2161b8d5ed97ee967bc3307e
+│           ├── handler.py -&gt; ../../blobs/70c059b13f10f3e20d34a31174dd7da53cfb93ad
+│           ├── modeling_falcon.py -&gt; ../../blobs/834822cbe81585262b727c3fdbe520a34fd24ad4
+│           ├── pytorch_model-00001-of-00002.bin -&gt; ../../blobs/66acf4bebb68593952a51575cb02dbf258a606e236c6b82b6b60c3b1e9089e66
+│           ├── pytorch_model-00002-of-00002.bin -&gt; ../../blobs/1de823c84b1c8b9889ac2a6c670ec6002a71776abd42cdf51bb3acd4c9938b29
+│           ├── pytorch_model.bin.index.json -&gt; ../../blobs/1d92decce70fb4d5e840694c6947d2abfef27fdf
+│           ├── special_tokens_map.json -&gt; ../../blobs/24f43d813328da380b3d684c019f9c6d84df6b50
+│           ├── tokenizer.json -&gt; ../../blobs/24f2d2e20d26ae4f0729da0d008e0ee6d81fc560
+│           └── tokenizer_config.json -&gt; ../../blobs/4aa644a0eca5b539ec8703d62d4b957c74a54963
+└── version.txt
+</code></pre></div>
+<p>2.Saving model artefacts to S3 object store.</p>
+<p>In the IES GenAI Platform deployment workflow, we do not depend on the vLLM to download models from HuggingFace, as we utilised our own downloader in the previous section.</p>
+<p>To copy the locally downloaded model artefacts tarfile to our AWS S3 bucket, use the following command:</p>
+<p><div class="highlight"><pre><span></span><code>aws s3 cp &lt;tarfileName&gt; s3://&lt;bucket-id&gt;/models/&lt;modelFamily&gt;/&lt;revision&gt;/&lt;tarfileName&gt;
+# eg. aws s3 cp tiiuae--falcon-7b.tar.gz s3://&lt;bucket-id&gt;/models/falcon/cf4b3c4/tiiuae--falcon-7b-instruct.tar.gz
+</code></pre></div>
+For standardisation purposes, please adhere to the following path prefix:</p>
+<p><div class="highlight"><pre><span></span><code>s3://bucket/models/&lt;modelFamily&gt;/&lt;revision&gt;
+</code></pre></div>
+For revision, if the revision is cf4b3c42ce2fdfe24f753f0f0d179202fea59c99, you may just use the first 7 characters: cf4b3c4.
+<img alt="HF Download" src="../../../images/download_hf.png" /></p>
+<h3 id="creating-llm-servingtemplate-for-ai-core-deployment">Creating LLM ServingTemplate for AI Core Deployment</h3>
+<p>All our existing self-hosted LLM ServingTemplates can be found under the following repository. For this documentation, you can find the ServingTemplate we are using to deploy the falcon-7b-instruct model here.</p>
+<p>As the ServingTemplate may be complicated with various parameters to change, below provides the shortened version that highlights the important changes to make:</p>
+<div class="highlight"><pre><span></span><code>apiVersion: ai.sap.com/v1alpha1
+kind: ServingTemplate
+metadata:
+  name: falcon-7b-instruct-cf4b3c4     # this is the servingtemplate name
+  annotations:
+    scenarios.ai.sap.com/description: &quot;SAP Hosted models on SAP AI Core&quot;
+    scenarios.ai.sap.com/name: &quot;sap-hosted-model&quot;
+    executables.ai.sap.com/description: &quot;AI Core executable for Open-source LLMs&quot;
+    executables.ai.sap.com/name: &quot;aicore-opensource&quot;
+  labels:
+    scenarios.ai.sap.com/id: &quot;sap-hosted-model&quot;       # scenarioID for servingTemplate
+    executables.ai.sap.com/id: &quot;aicore-opensource&quot;    # executableID for servingTemplate
+    ai.sap.com/version: &quot;1.0.0&quot;
+spec:
+  inputs:
+    parameters:
+      - name: image                                   # vLLM docker image, use the latest standardised one on our image repository
+        type: &quot;string&quot;
+        default: &quot;ies-aicoe.common.repositories.cloud.sap/genai-platform-exp/aicore-vllm:v090124-01&quot;
+      - name: resourcePlan                            # resourceplan
+        type: &quot;string&quot;
+        default: &quot;infer2.4xl&quot;
+              ...
+      - name: modelId                                 # HuggingFace model ID
+        type: &quot;string&quot;
+        default: &quot;tiiuae/falcon-7b-instruct&quot;
+      - name: revision
+        type: &quot;string&quot;
+        default: &quot;cf4b3c42ce2fdfe24f753f0f0d179202fea59c99&quot;
+      - name: modelName                               # vLLM application model name
+        type: &quot;string&quot;
+        default: &quot;tiiuae--falcon-7b-instruct&quot;
+    artifacts:
+    - name: tiiuae_falcon_7b_instruct                 # artifact for object store (MUST be alphanumeric and underscore)
+  template:
+    apiVersion: &quot;serving.kserve.io/v1beta1&quot;
+    metadata:
+            ...
+    spec: |
+      predictor:
+                ...
+        containers:
+                    ...
+          - name: STORAGE_URI
+            value: &quot;{{inputs.artifacts.tiiuae_falcon_7b_instruct}}&quot;   # change the following name to the `artifacts` values
+                        ...
+          volumeMounts:
+                        ...
+        volumes:
+                    ...
+</code></pre></div>
+<h3 id="deployment-settings-on-ai-launchpad">Deployment settings on AI Launchpad</h3>
+<h4 id="3-creating-application-to-sync-servingtemplate-sap-ai-core-administration">3. Creating Application to Sync ServingTemplate (SAP AI Core Administration)</h4>
+<h4 id="4-creating-object-store-secret-on-ai-launchpad-ml-operations">4. Creating Object Store Secret on AI Launchpad (ML Operations)</h4>
+<h4 id="5-creating-models-on-ai-launchpad-ml-operations">5. Creating Models on AI Launchpad (ML Operations)</h4>
+<h4 id="6-creating-configurations-for-deployment-ml-operations">6. Creating Configurations for Deployment (ML Operations)</h4>
+<h4 id="7-creating-deployment-for-llm-ml-operations">7. Creating Deployment for LLM (ML Operations)</h4>
+<h2 id="what-are-the-pros-cons-vlmm">What are the pros &amp; cons vLMM?</h2>
+<ul>
+<li>
+<p>seems very fast</p>
+</li>
+<li>
+<p>seems very easy to use</p>
+</li>
+<li>
+<p>Really new framework: small community, maybe not mature (unknown problems), may not be the dominant framework in the future and then not be maintained.</p>
+</li>
+<li>
+<p>have to write the connector yourself for less common models</p>
+</li>
+</ul>
+<h2 id="source-code">Source Code</h2>
+<p>Compelte source code <a href="https://github.com/GAmaranathaReddy/GenAI-Hub/tree/main/src/vllm-runtime">Source Code</a> {:target="_blank"}.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom">2024-05-22 09:19:44 UTC</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom">2024-05-22 09:19:44 UTC</span>
+  </span>
+
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
+      
+    </span>
+    <nav>
+      
+        <a href="mailto:44643853+gamaranathareddy@users.noreply.github.com">FullstackQuickReference</a>
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+    
+  </body>
+</html>

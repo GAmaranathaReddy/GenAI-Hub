@@ -1,0 +1,1157 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../fine-tunemodels/deployment/">
+      
+      
+        <link rel="next" href="../../../proxy-deployments/deployment/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.24">
+    
+    
+      
+        <title>Embeded Models - GenAI Hub Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm-40-176h24v-64h-24c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deploying-embedding-models-on-the-ai-core-with-infinity" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="GenAI Hub Guide" class="md-header__button md-logo" aria-label="GenAI Hub Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GenAI Hub Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Embeded Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/GAmaranathaReddy/GenAI-Hub" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    G AmaranathaReddy/GenAI-Hub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="GenAI Hub Guide" class="md-nav__button md-logo" aria-label="GenAI Hub Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    GenAI Hub Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/GAmaranathaReddy/GenAI-Hub" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    G AmaranathaReddy/GenAI-Hub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../prerequisites/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prerequisites
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    llm-deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            llm-deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chat-models/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chat Models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fine-tunemodels/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Finetuned Models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Embeded Models
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Embeded Models
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Checkpoint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparing-and-testing-the-deployment-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing and Testing the Deployment Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-ai-core-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare AI Core Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare AI Core Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment Template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-weight-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model weight download
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-checkpoint_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Checkpoint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-deployment-via-gen-ai-hub-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Deployment via gen-ai-hub-sdk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    proxy-deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            proxy-deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../proxy-deployments/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LiteLLM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checklist
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Checkpoint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparing-and-testing-the-deployment-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing and Testing the Deployment Code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-ai-core-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare AI Core Deployment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prepare AI Core Deployment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deployment Template
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-weight-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model weight download
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-checkpoint_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Model Checkpoint
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Image
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-deployment-via-gen-ai-hub-sdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      Use Deployment via gen-ai-hub-sdk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source code
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="deploying-embedding-models-on-the-ai-core-with-infinity">Deploying Embedding Models on the AI Core with <code>infinity</code></h1>
+<p><strong>The steps shown here will surely change in the future and the whole thing will get easier. This blog post is for early adopters and experts with a certain ability to suffer.</strong></p>
+<p><a href="https://github.com/michaelfeil/infinity"><code>infinity</code></a> is a fast and easy to use library for embedding model inference and serving with a permissive license. It comes with seamless integration with popular <a href="https://huggingface.co/docs/transformers/index">Huggingface <code>transformers</code></a> models.</p>
+<h2 id="checklist">Checklist</h2>
+<ul>
+<li>[ ] Your model is compatible with <a href="https://huggingface.co/sentence-transformers">SentenceTransformers</a></li>
+<li>[ ] Access to an AI Core instance with access to the required GPU resource plans</li>
+</ul>
+<h3 id="model-checkpoint">Model Checkpoint</h3>
+<p><code>infinity</code> supports a variety of generative transformer models in <a href="https://huggingface.co/docs/transformers/index">Huggingface <code>transformers</code></a>.</p>
+<p>A first simple check to see if your model checkpoint can be used with <code>infinity</code> is if it can be loaded using SentenceTransformer:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;&lt;your model&gt;&quot;</span><span class="p">)</span>
+<span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;This framework generates embeddings for each input sentence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Sentences are passed as a list of string.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The quick brown fox jumps over the lazy dog.&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">sentence_embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="preparing-and-testing-the-deployment-code">Preparing and Testing the Deployment Code</h3>
+<p>The next step is to interactively test the model checkpoint in infinity on a GPU machine.</p>
+<p><div class="highlight"><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>infinity-emb<span class="o">[</span>all<span class="o">]</span>
+</code></pre></div>
+Going back to the example from earlier , running the mdoel would look like this:</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">infinity_emb</span> <span class="kn">import</span> <span class="n">AsyncEmbeddingEngine</span><span class="p">,</span> <span class="n">EngineArgs</span>
+
+<span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Embed this is sentence via Infinity.&quot;</span><span class="p">,</span> <span class="s2">&quot;Paris is in France.&quot;</span><span class="p">]</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">AsyncEmbeddingEngine</span><span class="o">.</span><span class="n">from_args</span><span class="p">(</span><span class="n">EngineArgs</span><span class="p">(</span><span class="n">model_name_or_path</span> <span class="o">=</span> <span class="s2">&quot;&lt;your-model&gt;&quot;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&quot;torch&quot;</span><span class="p">))</span>
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">engine</span><span class="p">:</span> <span class="c1"># engine starts with engine.astart()</span>
+        <span class="n">embeddings</span><span class="p">,</span> <span class="n">usage</span> <span class="o">=</span> <span class="k">await</span> <span class="n">engine</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">sentences</span><span class="o">=</span><span class="n">sentences</span><span class="p">)</span>
+    <span class="c1"># engine stops with engine.astop()</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prompt: </span><span class="si">{</span><span class="n">prompt</span><span class="si">!r}</span><span class="s2">, Generated text: </span><span class="si">{</span><span class="n">generated_text</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+Alternatively, we can start a server locally with the following command:
+<div class="highlight"><pre><span></span><code>infinity_emb --model-name-or-path &quot;&lt;your-model&gt;&quot;
+</code></pre></div>
+A test request can be sent like this:
+<div class="highlight"><pre><span></span><code>curl http://localhost:8000/embeddings \
+    -H &quot;Content-Type: application/json&quot; \
+    -d &#39;{
+        &quot;model&quot;: &quot;&lt;your-model&gt;&quot;,
+        &quot;input&quot;: [&quot;A sentence to encode.&quot;],
+    }&#39;
+</code></pre></div>
+This is the type of server we will use on AI Core. The API provided by the server is compatible with the OpenAI API.</p>
+<h3 id="prepare-ai-core-deployment">Prepare AI Core Deployment</h3>
+<p>After validating that the model checkpoint can be used for a <code>infinity</code> server the next step is to start this server in an AI Core deployment. This requires three things:
+1. A <strong>deployment template</strong> in a git repository onboarded to AI Core
+2. A <strong>model checkpoint</strong> in an object store onboarded to AI Core
+3. A <strong>docker image</strong> in a repository onboarded to AI Core</p>
+<p>There are excellent resources on how to create an AI Core instance and how to complete the onboarding and thus we won't cover this here in this post.</p>
+<h4 id="deployment-template">Deployment Template</h4>
+<p>The following deployment template can be used and exposes the most important deployment options as parameters.</p>
+<p><div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ai.sap.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServingTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nomic-embed</span><span class="w"> </span><span class="c1">## This is the ServingTemplate&#39;s Name</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scenarios.ai.sap.com/description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;CPIT</span><span class="nv"> </span><span class="s">Hosted</span><span class="nv"> </span><span class="s">models</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">SAP</span><span class="nv"> </span><span class="s">AI</span><span class="nv"> </span><span class="s">Core&quot;</span><span class="w"> </span><span class="c1">## This is the scenario Name</span>
+<span class="w">    </span><span class="nt">scenarios.ai.sap.com/name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cpit-foundation-models&quot;</span>
+<span class="w">    </span><span class="nt">executables.ai.sap.com/description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;AI</span><span class="nv"> </span><span class="s">Core</span><span class="nv"> </span><span class="s">executable</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">CPIT</span><span class="nv"> </span><span class="s">Open-source</span><span class="nv"> </span><span class="s">LLMs&quot;</span>
+<span class="w">    </span><span class="nt">executables.ai.sap.com/name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nomic-embed&quot;</span><span class="w"> </span><span class="c1">## This is the executables Name</span>
+<span class="w">  </span><span class="nt">labels</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">scenarios.ai.sap.com/id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ies-foundation-models&quot;</span>
+<span class="w">    </span><span class="nt">executables.ai.sap.com/id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nomic-embed&quot;</span><span class="w"> </span><span class="c1"># Adjust for your model</span>
+<span class="w">    </span><span class="nt">ai.sap.com/version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1.0.0&quot;</span>
+<span class="w">    </span><span class="nt">scenarios.ai.sap.com/llm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">inputs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">parameters</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;XXX.common.repositories.cloud.sap/genai-platform-exp/ai-core-embed-model-serve:0.0.1&quot;</span><span class="w"> </span><span class="c1"># This is the image used in JFrog, if you have not rebuilt this, it needs no adjustment.</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resourcePlan</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;infer2.4xl&quot;</span><span class="w"> </span><span class="c1"># If the model does not require any specific hardware you can leave this see wiki page on vLLM.</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tokenizer</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">minReplicas</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">maxReplicas</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">portNumber</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;9000&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpu</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;4&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trustRemoteCode</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;true&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">batchSize</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;128&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">urlPrefix</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/v1&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">additionalArgument</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">modelName</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;string&quot;</span>
+<span class="w">        </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nomic-ai/nomic-embed-text-v1.5&quot;</span><span class="w"> </span><span class="c1"># This is the model name which later has to be used in the API call.</span>
+<span class="w">    </span><span class="nt">artifacts</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nomicv15</span><span class="w"> </span><span class="c1"># This is the name of your artifact, best to avoid any special characters like &quot;-&quot; or &quot;_&quot;. You need to change this in the specs STORAGE_URI below.</span>
+<span class="w">  </span><span class="nt">template</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;serving.kserve.io/v1beta1&quot;</span>
+<span class="w">    </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">annotations</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">autoscaling.knative.dev/metric: concurrency</span>
+<span class="w">        </span><span class="no">autoscaling.knative.dev/target: 1</span>
+<span class="w">        </span><span class="no">autoscaling.knative.dev/targetBurstCapacity: -1</span>
+<span class="w">        </span><span class="no">autoscaling.knative.dev/window: &quot;10m&quot;</span>
+<span class="w">        </span><span class="no">autoscaling.knative.dev/scaleToZeroPodRetentionPeriod: &quot;10m&quot;</span>
+<span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">ai.sap.com/resourcePlan: &quot;{{inputs.parameters.resourcePlan}}&quot;</span>
+<span class="w">    </span><span class="nt">spec</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">      </span><span class="no">predictor:</span>
+<span class="w">        </span><span class="no">imagePullSecrets:</span>
+<span class="w">        </span><span class="no">- name: dab-genai-platform-artifactory</span>
+<span class="w">        </span><span class="no">minReplicas: {{inputs.parameters.minReplicas}}</span>
+<span class="w">        </span><span class="no">maxReplicas: {{inputs.parameters.maxReplicas}}</span>
+<span class="w">        </span><span class="no">containers:</span>
+<span class="w">        </span><span class="no">- name: kserve-container</span>
+<span class="w">          </span><span class="no">image: &quot;{{inputs.parameters.image}}&quot;</span>
+<span class="w">          </span><span class="no">ports:</span>
+<span class="w">          </span><span class="no">- containerPort: {{inputs.parameters.portNumber}}</span>
+<span class="w">            </span><span class="no">protocol: TCP</span>
+<span class="w">          </span><span class="no">env:</span>
+<span class="w">          </span><span class="no">- name: STORAGE_URI</span>
+<span class="w">            </span><span class="no">value: &quot;{{inputs.artifacts.nomicv15}}&quot;</span>
+<span class="w">          </span><span class="no">- name: TRUST_REMOTE_CODE</span>
+<span class="w">            </span><span class="no">value: &quot;{{inputs.parameters.trustRemoteCode}}&quot;</span>
+<span class="w">          </span><span class="no">- name: BATCH_SIZE</span>
+<span class="w">            </span><span class="no">value: &quot;{{inputs.parameters.batchSize}}&quot;</span>
+<span class="w">          </span><span class="no">- name: URL_PRE_FIX</span>
+<span class="w">            </span><span class="no">value: &quot;{{inputs.parameters.urlPrefix}}&quot;</span>
+<span class="w">          </span><span class="no">- name: MODEL_SERVE_NAME</span>
+<span class="w">            </span><span class="no">value: &quot;{{inputs.parameters.modelName}}&quot;</span>
+<span class="w">          </span><span class="no">- name: ARG</span>
+<span class="w">            </span><span class="no">value: &quot;{{inputs.parameters.additionalArgument}}&quot;</span>
+<span class="w">          </span><span class="no">- name: HUGGINGFACE_HUB_CACHE</span>
+<span class="w">            </span><span class="no">value: &quot;/mnt/models&quot; # This is the path where the model will be stored in the container by default. Change this to &#39;/nonexistent/models&#39; for Huggingface Model Download</span>
+<span class="w">          </span><span class="no">volumeMounts:</span>
+<span class="w">          </span><span class="no">- name: shm</span>
+<span class="w">            </span><span class="no">mountPath: /dev/shm</span>
+<span class="w">        </span><span class="no">volumes:</span>
+<span class="w">        </span><span class="no">- name: shm</span>
+<span class="w">          </span><span class="no">emptyDir:</span>
+<span class="w">            </span><span class="no">medium: Memory</span>
+<span class="w">            </span><span class="no">sizeLimit: 10Gi</span>
+</code></pre></div>
+This workflow template is included in the repository (<a href="../aicore-templates/serve-emb-infinity.yaml"><code>serve-emb-infinity.yaml</code></a>).</p>
+<h4 id="model-weight-download">Model weight download</h4>
+<p>download model weights. For example via:
+<div class="highlight"><pre><span></span><code>mkdir nomic-embed-text-v1.5 &amp;&amp; cd nomic-embed-text-v1.5
+git lfs install
+git clone https://huggingface.co/nomic-ai/nomic-embed-text-v1.5
+</code></pre></div></p>
+<h4 id="model-checkpoint_1">Model Checkpoint</h4>
+<p>Transfer your model checkpoint to an object store. For example via:
+<div class="highlight"><pre><span></span><code>aws s3 cp --recursive &lt;path-to-your-checkpoint-folder&gt; s3://on-boarded-bucket/our-awesome-model/v1
+</code></pre></div></p>
+<p>Next we create an artifact for the checkpoint. Set <code>url</code> to <code>ai://{object-secret-name}/{path-rel-to-pathPrefix-of-the-secret}</code> and <code>scenarioId</code> to the value used in the deployment template:</p>
+<p><div class="highlight"><pre><span></span><code>{
+  &quot;labels&quot;: [],
+  &quot;name&quot;: &quot;our-awesome-model/v1&quot;,
+  &quot;kind&quot;: &quot;model&quot;,
+  &quot;url&quot;: &quot;ai://s3-bucket/our-awesome-model/v1&quot;,
+  &quot;description&quot;: &quot;Fantastic model&quot;,
+  &quot;scenarioId&quot;: &quot;&lt;your-scenario&gt;&quot;
+}
+</code></pre></div>
+The response to the <code>POST</code>-request contains an <code>artifactid</code> e.g. <code>aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa</code>.</p>
+<h4 id="docker-image">Docker Image</h4>
+<p>The final missing piece is the docker image.</p>
+<p><div class="highlight"><pre><span></span><code><span class="k">FROM</span><span class="w"> </span><span class="s">nvcr.io/nvidia/pytorch:24.01-py3</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">runtime</span>
+
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/usr/src</span>
+
+<span class="k">RUN</span><span class="w"> </span>mkdir<span class="w"> </span>/nonexistent<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>chmod<span class="w"> </span><span class="m">777</span><span class="w"> </span>/nonexistent
+
+<span class="k">RUN</span><span class="w"> </span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span><span class="nv">pip</span><span class="o">==</span><span class="m">23</span>.2.1<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;infinity-emb[all]&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>/root/.cache/pip
+
+<span class="c"># These are environment variable from Huggingface</span>
+<span class="c"># https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables</span>
+<span class="k">ENV</span><span class="w"> </span><span class="nv">HUGGINGFACE_HUB_CACHE</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">HUGGING_FACE_HUB_TOKEN</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">HF_HOME</span><span class="o">=</span><span class="s2">&quot;/nonexistent&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">HF_HUB_OFFLINE</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">HF_HUB_DISABLE_TELEMETRY</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">SERVE_FILES_PATH</span><span class="o">=</span><span class="s2">&quot;/mnt/models&quot;</span>
+
+<span class="k">COPY</span><span class="w"> </span>run.sh<span class="w"> </span>/usr/src/run.sh
+<span class="k">RUN</span><span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/src/run.sh
+
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;/usr/src/run.sh&quot;</span><span class="w"> </span><span class="p">]</span>
+</code></pre></div>
+This <a href="./Dockerfile">Dockerfile</a> and the <a href="./run.sh"><code>run.sh</code>-file</a> are part of this repo and both can be usable without modification. The <code>run.sh</code> file starts the <code>infinity</code> server using the template parameters. Once the docker image is built push it to the docker repository registered in AI Core under the name used as the replacement for <code>&lt;your-docker-repo-secret&gt;</code> in the workflow template. In the next step we will assume the image was push as <code>XXX.common.repositories.cloud.sap/ai-core-infinity-model-serve:0.0.1</code>.</p>
+<h3 id="start-deployment">Start Deployment</h3>
+<p>To start the deployment we have to send a <code>POST</code>-request to <code>{apiurl}/v2/lm/configurations</code> to create a configuration:</p>
+<p><div class="highlight"><pre><span></span><code><span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;executableId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;infinity-emb-model-serve&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;inputArtifactBindings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;artifactId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;embmodel&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nomic-embed-text-v1.5&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;parameterBindings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;image&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;XXX.common.repositories.cloud.sap/genai-platform-exp/ai-core-embed-model-serve:0.0.1&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;batchSize&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;256&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;trustRemoteCode&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;False&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;portNumber&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9000&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;resourcePlan&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;infer2.l&quot;</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;modelName&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;value&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;nomic-ai/nomic-embed-text-v1.5&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;scenarioId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;llm-fine-tuning&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+</code></pre></div>
+The response to the request will contain a <code>configurationid</code>, e.g. <code>cccccccc-cccc-cccc-cccc-cccccccccccc</code>.</p>
+<p>With this ID we can start the deployment by sending a <code>POST</code> request to <code>{apiurl}/v2/lm/configurations/cccccccc-cccc-cccc-cccc-cccccccccccc/deployments</code>.</p>
+<h3 id="use-deployment-via-gen-ai-hub-sdk">Use Deployment via <code>gen-ai-hub-sdk</code></h3>
+<p>The deployment we created can be used in Python via <a href="https://github.wdf.sap.corp/AI/generative-ai-hub-sdk"><code>generative-ai-hub-sdk</code></a>. Make sure that <code>generative-ai-hub-sdk</code> is <a href="https://github.wdf.sap.corp/AI/generative-ai-hub-sdk/tree/main/docs/proxy">configured to use AI Core proxies</a>.</p>
+<p>The previous steps deploy an OpenAI-style server, so the deployment can be used via the OpenAI classes from the package. The only additional step is to tell the package which scenario and which configurations are embedding model deployments.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">gen_ai_hub.proxy.native.openai</span> <span class="kn">import</span> <span class="n">OpenAI</span>
+<span class="kn">from</span> <span class="nn">gen_ai_hub.proxy.gen_ai_hub_proxy</span> <span class="kn">import</span> <span class="n">GenAIHubProxyClient</span>
+
+<span class="n">GenAIHubProxyClient</span><span class="o">.</span><span class="n">add_foundation_model_scenario</span><span class="p">(</span>
+    <span class="n">scenario_id</span><span class="o">=</span><span class="s1">&#39;&lt;your-scenario&gt;&#39;</span><span class="p">,</span>
+    <span class="n">config_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;nomic-embed-text-*&quot;</span><span class="p">],</span>
+    <span class="n">prediction_url_suffix</span><span class="o">=</span><span class="s1">&#39;v1/embeddings&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+This function instructs the client to treat all <code>RUNNING</code> deployments in the <code>&lt;your-scenario&gt;</code> scenario with a configuration name matching <code>nomic-embed-text-*</code> as a foundational model deployments and that the prediction url is the deployment url with <code>/v1/embeddings</code> as a suffix.</p>
+<p>After running this function the models can be used in the same way as a centrally hosted model:</p>
+<div class="highlight"><pre><span></span><code><span class="n">proxy_client</span> <span class="o">=</span> <span class="n">GenAIHubProxyClient</span><span class="p">()</span>
+<span class="n">openai</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">proxy_client</span><span class="o">=</span><span class="n">proxy_client</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_detailed_instruct</span><span class="p">(</span><span class="n">task_description</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;Instruct: </span><span class="si">{</span><span class="n">task_description</span><span class="si">}</span><span class="se">\n</span><span class="s1">Query: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s1">&#39;</span>
+
+<span class="c1"># For &quot;nomic-ai/nomic-embed-text-v1.5&quot; each query must come with a one-sentence instruction that describes the task</span>
+<span class="n">task</span> <span class="o">=</span> <span class="s1">&#39;Given a web search query, retrieve relevant passages that answer the query&#39;</span>
+<span class="n">queries</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">get_detailed_instruct</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="s1">&#39;how much protein should a female eat&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">emb</span> <span class="o">=</span> <span class="n">openai</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">&#39;nomic-ai/nomic-embed-text-v1.5&#39;</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="n">queries</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<p>This post is designed to give you a head start on setting up your own embedding models on AI Core. When deploying models, there are many technical details that play a role and must be taken into account. Expect that the best way to deploy an embedding will change on a regular basis. Also, don't forget about the costs. You'll need to keep those models under high utilization if you want to keep your spending anywhere near what the big commercial companies charge.</p>
+<h2 id="source-code">Source code</h2>
+<p>Complete source code example <a href="https://github.com/GAmaranathaReddy/GenAI-Hub/tree/main/src/emb-runtime">Source Code</a> {:target="_blank"}.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom">2024-05-22 09:19:44 UTC</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-custom">2024-05-22 09:19:44 UTC</span>
+  </span>
+
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"/></svg>
+      
+    </span>
+    <nav>
+      
+        <a href="mailto:44643853+gamaranathareddy@users.noreply.github.com">FullstackQuickReference</a>
+    </nav>
+  </span>
+
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.expand", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.081f42fc.min.js"></script>
+      
+    
+  </body>
+</html>
